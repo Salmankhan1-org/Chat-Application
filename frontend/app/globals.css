@@ -1,14 +1,12 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #ffffff !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* body {
+  font-family: IBM Plex Sans !important;
+  background-color: white !important;
+} */
+
 
 html {
   height: 100%;
@@ -18,6 +16,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-family: 'Inter', 'Roboto', sans-serif;
 }
 
 body {
@@ -41,9 +40,58 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+} */
+
+
+/* Bluise Toast Theme */
+/* .bluise-toast {
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease-in-out;
+}
+
+.bluise-toast:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(96, 165, 250, 0.35);
+} */
+
+/* Base style */
+.bluise-toast {
+  background: #ffffff;
+  border-radius: 10px;
+  font-size: 13px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Success */
+.bluise-toast[data-type="success"] {
+  color: #16a34a;
+  border-left: 4px solid #22c55e;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+}
+
+/* Error */
+.bluise-toast[data-type="error"] {
+  color: #dc2626;
+  border-left: 4px solid #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+/* Warning */
+.bluise-toast[data-type="warning"] {
+  color: #d97706;
+  border-left: 4px solid #f59e0b;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
+}
+
+/* Info (your bluish theme) */
+.bluise-toast[data-type="info"] {
+  color: #2563eb;
+  border-left: 4px solid #60a5fa;
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.25);
 }
