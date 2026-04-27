@@ -1,0 +1,226 @@
+.nav-icon {
+    font-size: 22px;
+    color: #6c757d;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    padding: 8px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-icon:hover {
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
+    transform: scale(1.1);
+}
+
+.nav-icon.active {
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.15);
+}
+
+/*  Custom Light Blue Tooltip */
+.tippy-box[data-theme~='bluise'] {
+  background-color: #e0f2fe; /* light blue */
+  color: #1e3a8a; /* deep blue text */
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.25);
+}
+
+/* Arrow color */
+.tippy-box[data-theme~='bluise'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: #e0f2fe;
+}
+
+.tippy-box[data-theme~='bluise'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: #e0f2fe;
+}
+
+.tippy-box[data-theme~='bluise'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #e0f2fe;
+}
+
+.tippy-box[data-theme~='bluise'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: #e0f2fe;
+}
+
+.user-hover:hover {
+    background-color: #f1f5f9;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.transition-all {
+    transition: all 0.2s ease;
+}
+
+
+/* Container */
+.userlist-container {
+  width: 100%;
+  background: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .userlist-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+.userlist-inner {
+  padding: 1rem;
+}
+
+/* Header */
+.userlist-title {
+  color: #2563eb;
+  letter-spacing: -0.03em;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.new-chat-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: #60a5fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.new-chat-btn:hover {
+  background: #eef5ff;
+  /* transform: scale(1.05); */
+}
+
+/* Search */
+.search-box {
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.search-input {
+  font-size: 0.9rem;
+  color: #0f172a;
+  /* padding-top: 0.7rem;
+  padding-bottom: 0.7rem; */
+}
+
+/* Filters */
+.filter-btn {
+  font-weight: 400;
+  font-size: 0.85rem;
+ 
+}
+
+.filter-active {
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  color: #2563eb;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.08);
+}
+
+.filter-inactive {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+}
+
+/* Archived */
+.archived-box {
+  color: #64748b;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-radius: 14px;
+}
+
+.archived-box:hover {
+  background-color: #eff2f7;
+}
+
+/* Chat List */
+.chat-list {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* Chat Item */
+.chat-item {
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.chat-item:hover {
+  background-color: #f8fafc;
+}
+
+.chat-item-active {
+  background-color: #eff6ff;
+  border-left: 3px solid #2563eb;
+}
+
+/* Avatar */
+.avatar-img {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
+}
+
+.online-dot {
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.12);
+}
+
+/* Text */
+.chat-name {
+  color: #0f172a;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.chat-time {
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+.chat-message {
+  color: #64748b;
+  font-size: 0.82rem;
+  max-width: 210px;
+}
+
+/* Unread */
+.unread-badge {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: #fff;
+  min-width: 20px;
+  height: 20px;
+  font-size: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.18);
+}

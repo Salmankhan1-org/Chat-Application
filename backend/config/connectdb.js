@@ -43,7 +43,27 @@ const connectDB = async () => {
         setupLifecycleListeners();
 
     } catch (error) {
-        console.error(`🔴 MongoDB Error: ${error.message}`);
+
+        let message;
+
+        switch (true) {
+            case error.message.includes('ENOTFOUND'):
+                message = 'No internet connection or invalid MongoDB URI.';
+                break;
+
+            case error.message.includes('ETIMEDOUT'):
+                message = 'Connection timed out. Database is taking too long to respond.';
+                break;
+
+            case error.message.includes('ECONNREFUSED'):
+                message = 'Database refused the connection.';
+                break;
+
+            default:
+                message = 'Something went wrong while connecting to database.';
+        }
+
+        console.error('🔴 MongoDB Error:', error?.message);
         process.exit(1);
     }
 };

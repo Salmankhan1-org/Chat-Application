@@ -102,3 +102,12 @@
 .otp-input:focus {
   border: 2px solid #60A5FA !important;
 }
+
+
+.custom-link {
+  text-decoration: none !important;
+}
+
+.custom-link:hover{
+  text-decoration: underline !important;
+}

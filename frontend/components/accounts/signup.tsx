@@ -131,8 +131,13 @@ const Signup = () => {
 
 
   return (
-    <div className='container'>
+    <div className='container '>
         <div className='row gx-5'>
+           
+            <div className="col d-none d-lg-flex align-items-center justify-content-center min-vh-100">
+                <Image src={'/assets/AuthCompanyImage1.png'} alt="k12 advantages" width={600} height={400} priority  quality={70} className="img-fluid" />
+            </div>
+           
             <div className='col'>
                 <form onSubmit={handleSignupUser} className='d-flex align-items-center justify-content-center min-vh-100 px-lg-5 ms-lg-5 me-lg-4'>
                     <div className='row row-cols-1 gy-2'>
