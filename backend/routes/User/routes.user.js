@@ -7,6 +7,9 @@ const { CreateNewUserController } = require('../../controllers/User/user.create.
 const { upload } = require('../../middlewares/multer.middleware');
 const { CreateNewUserValidator } = require('../../validators/User/create.user.validator');
 const { VerifyUserEmailController } = require('../../controllers/User/verify.user.email.controller');
+const { SendOtpToVerifyEmailToChangePasswordController, VerifyOTPToResetPasswordController, CreateNewPasswordController } = require('../../controllers/User/reset.password.controller');
+const { VerifyOTPValidator } = require('../../validators/User/verify.otp.validator');
+const { ResetPasswordValidator } = require('../../validators/User/reset.password.validator');
 const router = express.Router({});
 
 
@@ -30,5 +33,25 @@ router.post('/verify/email',
     VerifyUserEmailController
 )
 
+
+router.post('/forgot-password/send-otp',
+    SanitizeRequest,
+    SendOtpToVerifyEmailToChangePasswordController
+)
+
+
+router.post('/forgot-password/verify-otp',
+    SanitizeRequest,
+    VerifyOTPValidator,
+    ValidateRequest,
+    VerifyOTPToResetPasswordController
+)
+
+router.post('/forgot-password/reset-password',
+    SanitizeRequest,
+    ResetPasswordValidator,
+    ValidateRequest,
+    CreateNewPasswordController
+)
 
 module.exports = router;

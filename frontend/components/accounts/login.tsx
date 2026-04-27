@@ -111,6 +111,10 @@ const Login = () => {
   return (
     <div className='container'>
         <div className='row gx-5'>
+             <div className="col d-none d-lg-flex align-items-center justify-content-center min-vh-100">
+                <Image src={'/assets/AuthCompanyImage1.png'} alt="k12 advantages" width={600} height={400} priority quality={70} className="img-fluid" />
+                
+            </div>
             <div className='col'>
                 <form onSubmit={handleLoginUser} className='d-flex align-items-center justify-content-center min-vh-100 px-lg-5 ms-lg-5 me-lg-4'>
                     <div className='row row-cols-1 gy-3'>
@@ -131,7 +135,7 @@ const Login = () => {
                                 <InputPassword labelText='Password' placeholder={`#########`} value={userPassword} setValue={setUserPassword} error={passwordError} disabled={loading}/>
                             </div>
                             <p className='text-end'>
-                                <Link href={'/accounts/auth/forgot-password'} style={{fontSize:'12px'}} className='text-decoration-none'>Forgot Password?</Link>
+                                <Link href={'/accounts/auth/forgot-password'} style={{fontSize:'12px'}} className='custom-link'>Forgot Password?</Link>
                             </p>
                         </div>
 
@@ -166,7 +170,7 @@ const Login = () => {
                                 Don't have an account?{" "}
                                 <Link
                                     href="/accounts/auth/signup" 
-                                    className="text-decoration-none fw-semibold"
+                                    className="custom-link fw-semibold"
                                 >
                                     Signup
                                 </Link>
