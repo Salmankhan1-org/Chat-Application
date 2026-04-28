@@ -224,3 +224,31 @@
   justify-content: center;
   box-shadow: 0 3px 8px rgba(37, 99, 235, 0.18);
 }
+
+/* Smooth dropdown
+.dropdown-menu {
+  animation: fadeIn 0.2s ease;
+  min-width: 150px;
+} */
+
+/* Hover effect */
+.dropdown-item:hover {
+  background-color: #f1f5f9;
+}
+
+/* Logout hover (red feel) */
+.dropdown-item.text-danger:hover {
+  background-color: #fee2e2;
+}
+
+/* Animation */
+/* @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} */

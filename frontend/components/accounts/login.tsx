@@ -48,12 +48,13 @@ const Login = () => {
             setPasswordError('')
         }
 
-        const captchaToken = captchaRef.current?.getValue() || '';
+        // const captchaToken = captchaRef.current?.getValue() || '';
+        const captchaToken = '';
 
-        if(!captchaVerified || !captchaToken){
-            ToastFunction('error', 'Please complete the CAPTCHA');
-            IsValid = false;
-        }
+        // if(!captchaVerified || !captchaToken){
+        //     ToastFunction('error', 'Please complete the CAPTCHA');
+        //     IsValid = false;
+        // }
 
         return {IsValid,email:ValidatedEmail.value, password:ValidatedPassword.value, captchaToken};
     }

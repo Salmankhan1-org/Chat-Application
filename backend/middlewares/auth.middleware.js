@@ -25,19 +25,21 @@ exports.IsAuthenticated =
 
                 if (cachedUser) {
                     request.user = JSON.parse(cachedUser);
-                    if(!request?.user?.isActive || request?.user?.isDeleted){
-                        return response.status(403).json({
-                            statusCode: 403,
-                            success: false,
-                            error:[
-                                {
-                                    field: 'popup',
-                                    message: 'Your Account is either inactive or suspended. Please contact to ChitChat Team'
-                                }
-                            ],
-                            message: ''
-                        })
-                    }
+
+                    // console.log(request.user);
+                    // if(!request?.user?.isActive || request?.user?.isDeleted){
+                    //     return response.status(403).json({
+                    //         statusCode: 403,
+                    //         success: false,
+                    //         error:[
+                    //             {
+                    //                 field: 'popup',
+                    //                 message: 'Your Account is either inactive or suspended. Please contact to ChitChat Team'
+                    //             }
+                    //         ],
+                    //         message: ''
+                    //     })
+                    // }
                     return next();
                 }
 
@@ -48,19 +50,19 @@ exports.IsAuthenticated =
 
                     request.user = user;
 
-                    if(!request?.user?.isActive || request?.user?.isDeleted){
-                        return response.status(403).json({
-                            statusCode: 403,
-                            success: false,
-                            error:[
-                                {
-                                    field: 'popup',
-                                    message: 'Your Account is either inactive or suspended. Please contact to ChitChat Team'
-                                }
-                            ],
-                            message: ''
-                        })
-                    }
+                    // if(!request?.user?.isActive || request?.user?.isDeleted){
+                    //     return response.status(403).json({
+                    //         statusCode: 403,
+                    //         success: false,
+                    //         error:[
+                    //             {
+                    //                 field: 'popup',
+                    //                 message: 'Your Account is either inactive or suspended. Please contact to ChitChat Team'
+                    //             }
+                    //         ],
+                    //         message: ''
+                    //     })
+                    // }
 
                     next();
                 }else{

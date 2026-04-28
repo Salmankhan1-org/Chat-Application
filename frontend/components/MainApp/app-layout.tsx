@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import SideNavigation from "./side-navigation";
 import UserList from "./user-list";
 import ChatArea from "./chat-area";
+import { useAuth } from "@/utils/context.provider";
 
 const AppLayout = () => {
   const [selectedUser, setSelectedUser] = useState(null);
+  const {user,friends} = useAuth();
+
   const [mobileView, setMobileView] = useState("list"); // "list" | "chat"
 
   const handleUserClick = (user:any) => {
@@ -14,13 +17,12 @@ const AppLayout = () => {
   };
 
   const handleBack = () => {
-    console.log('Back button clicked');
     setMobileView("list");
   };
 
   return (
     <main className="d-flex overflow-hidden w-100" style={{ height: "100vh" }}>
-      <SideNavigation />
+      <SideNavigation mobileView={mobileView}/>
 
       {/* User List */}
       <div
@@ -32,6 +34,7 @@ const AppLayout = () => {
         }}
       >
         <UserList
+        users={friends}
           selectedUser={selectedUser}
           setSelectedUser={handleUserClick}
         />

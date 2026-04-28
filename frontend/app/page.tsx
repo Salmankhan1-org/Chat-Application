@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     },
     description:
       "ChitChat is a modern real-time messaging platform with AI chat, status updates, channels, and seamless communication experience.",
-    
+      
     keywords: [
       "ChitChat",
       "chat app",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
       follow: true,
     },
 
-    themeColor: "#60A5FA",
+    // themeColor: "#60A5FA",
 };
 
 const page = () => {

@@ -9,30 +9,30 @@ exports.LoginUserController = async(request, response) =>{
 
         // Verify the captcha token 
 
-        const captchaResponse = await axios.post(
-            "https://www.google.com/recaptcha/api/siteverify",
-            null,
-            {
-            params: {
-                secret: process.env.RECAPTCHA_SECRET_KEY,
-                response: captchaToken
-            }
-            }
-        );
+        // const captchaResponse = await axios.post(
+        //     "https://www.google.com/recaptcha/api/siteverify",
+        //     null,
+        //     {
+        //     params: {
+        //         secret: process.env.RECAPTCHA_SECRET_KEY,
+        //         response: captchaToken
+        //     }
+        //     }
+        // );
 
-        if (!captchaResponse.data.success) {
-            return response.status(400).json({
-                statusCode: 400,
-                success:false,
-                error:[
-                    {
-                        field: 'captcha',
-                        message: 'Captcha Verification failed'
-                    }
-                ],
-                message: ''
-            })
-        }
+        // if (!captchaResponse.data.success) {
+        //     return response.status(400).json({
+        //         statusCode: 400,
+        //         success:false,
+        //         error:[
+        //             {
+        //                 field: 'captcha',
+        //                 message: 'Captcha Verification failed'
+        //             }
+        //         ],
+        //         message: ''
+        //     })
+        // }
 
         // find user using email
 

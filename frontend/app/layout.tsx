@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapClient from "@/components/BootstrapClient";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Toaster } from "sonner";
+import { AuthProvider } from "@/utils/context.provider";
 
 export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_DEV_DOMAIN_URL}`),
@@ -87,15 +88,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Toaster
-          position="top-center"
-          richColors
-          toastOptions={{
-            className: "bluise-toast",
-          }}
-        />
-      <BootstrapClient/>
-      {children}
+        <AuthProvider>
+          <Toaster
+              position="top-center"
+              richColors
+              toastOptions={{
+                className: "bluise-toast",
+              }}
+            />
+          <BootstrapClient/>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
