@@ -7,12 +7,17 @@ const connectDB = require('./config/connectdb');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const app = express();
+const { Server } = require("socket.io");
+const http = require('http')
 
 
 const UserRoutes = require('./routes/User/routes.user');
+const initSocket = require('./sockets/socket.init');
 
 
 const PORT = process.env.PORT || 5000;
+
+
 
 // Connect DB
 connectDB();
@@ -40,6 +45,10 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 }));
 
+const server = http.createServer(app);
+
+initSocket(server);
+
 //Health checkup routes
 app.get('/api/v1/health', (request, response) => {
     response.status(200).json({ 
@@ -59,6 +68,6 @@ app.use('/api/v1/users', UserRoutes);
 // Global Error handler
 app.use(GlobalErrorHandler);
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log(`Server is listening on PORT ${PORT}`);
 })

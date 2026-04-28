@@ -10,6 +10,10 @@ const { VerifyUserEmailController } = require('../../controllers/User/verify.use
 const { SendOtpToVerifyEmailToChangePasswordController, VerifyOTPToResetPasswordController, CreateNewPasswordController } = require('../../controllers/User/reset.password.controller');
 const { VerifyOTPValidator } = require('../../validators/User/verify.otp.validator');
 const { ResetPasswordValidator } = require('../../validators/User/reset.password.validator');
+const { GetUserDetailsController } = require('../../controllers/User/get.user.details.controller');
+const { GetFriendsController } = require('../../controllers/User/get.friends.controller');
+const { IsAuthenticated } = require('../../middlewares/auth.middleware');
+const { LogoutUserController } = require('../../controllers/User/logout');
 const router = express.Router({});
 
 
@@ -28,6 +32,11 @@ router.post('/login',
     LoginUserController
 )
 
+router.get('/logout',
+    SanitizeRequest,
+    IsAuthenticated,
+    LogoutUserController
+)
 router.post('/verify/email', 
     SanitizeRequest,
     VerifyUserEmailController
@@ -52,6 +61,18 @@ router.post('/forgot-password/reset-password',
     ResetPasswordValidator,
     ValidateRequest,
     CreateNewPasswordController
+)
+
+
+router.get('/me',
+    SanitizeRequest,
+    IsAuthenticated,
+    GetUserDetailsController
+)
+
+router.get('/friends',
+    SanitizeRequest,
+    GetFriendsController
 )
 
 module.exports = router;

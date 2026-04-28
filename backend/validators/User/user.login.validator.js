@@ -17,7 +17,7 @@ exports.LoginValidator = [
         .withMessage('Password is required')
         .isLength({ min: 6 })
         .withMessage('Password must be at least 6 characters'),
-    body('captchaToken')
-        .notEmpty()
-        .withMessage('Password is required')
+    // body('captchaToken')
+    //     .notEmpty()
+    //     .withMessage('Captcha Token is required')
 ];

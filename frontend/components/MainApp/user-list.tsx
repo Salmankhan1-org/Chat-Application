@@ -4,97 +4,21 @@ import { FiSearch, FiArchive, FiPlus } from "react-icons/fi";
 import { MdOutlineAddComment } from "react-icons/md";
 import { IoArchiveOutline } from "react-icons/io5";
 import "./main.app.css";
+import { useAuth } from "@/utils/context.provider";
 
 export interface UserList{
+    users:any[],
     selectedUser: any,
     setSelectedUser: (user:any)=>void
 }
 
-export default function UserList({selectedUser, setSelectedUser}:UserList) {
+export default function UserList({users,selectedUser, setSelectedUser}:UserList) {
   const [activeFilter, setActiveFilter] = useState("All");
+  const {onlineUsers} = useAuth();
 
-  const users = [
-    {
-      id: 1,
-      name: "Salman Khan",
-      message: "Hey, are we still meeting for the project update later?",
-      time: "11:26 AM",
-      unread: 2,
-      online: true,
-    },
-    {
-      id: 2,
-      name: "Aman Verma",
-      message: "Bro send me the files ASAP",
-      time: "10:10 AM",
-      unread: 0,
-      online: false,
-    },
-    {
-      id: 3,
-      name: "Priya Sharma",
-      message: "Let's catch up this weekend 😊",
-      time: "Yesterday",
-      unread: 5,
-      online: true,
-    },
-    {
-      id: 4,
-      name: "Rahul Singh",
-      message: "Done! Check your mail",
-      time: "Mon",
-      unread: 0,
-      online: false,
-    },
-    {
-      id: 5,
-      name: "Neha Kapoor",
-      message: "Call me when you're free",
-      time: "Sun",
-      unread: 1,
-      online: true,
-    },
-    {
-      id: 6,
-      name: "Rohit Mehta",
-      message: "😂😂 That was hilarious!",
-      time: "Sat",
-      unread: 0,
-      online: false,
-    },
-    {
-      id: 7,
-      name: "Anjali Gupta",
-      message: "Meeting rescheduled to 4 PM",
-      time: "Fri",
-      unread: 3,
-      online: true,
-    },
-    {
-      id: 8,
-      name: "Karan Malhotra",
-      message: "Check the new design I sent",
-      time: "Thu",
-      unread: 0,
-      online: false,
-    },
-    {
-      id: 9,
-      name: "Sneha Reddy",
-      message: "Good night 🌙",
-      time: "Wed",
-      unread: 0,
-      online: false,
-    },
-    {
-      id: 10,
-      name: "Vikram Joshi",
-      message: "Let's finalize the budget tomorrow",
-      time: "Tue",
-      unread: 4,
-      online: true,
-    },
-  ];
+  console.log(onlineUsers);
+
+
 
   return (
     <div className="userlist-container d-flex flex-column h-100 border-end">
@@ -122,7 +46,7 @@ export default function UserList({selectedUser, setSelectedUser}:UserList) {
 
         {/* Filters */}
         <div className="d-flex gap-2 mb-3 flex-wrap">
-          {["All", "Unread", "Favorite"].map((item) => (
+          {["All", "Unread", "Favorite", "Requests"].map((item) => (
             <button
               key={item}
               onClick={() => setActiveFilter(item)}
@@ -154,10 +78,10 @@ export default function UserList({selectedUser, setSelectedUser}:UserList) {
         >
           {users.map((user, index) => (
             <div
-              key={user.id}
+              key={user._id}
               onClick={()=>setSelectedUser(user)}
               className={`chat-item ${
-                selectedUser?.id === user.id || (selectedUser === null && index === 0)
+                selectedUser?._id === user._id || (selectedUser === null && index === 0)
                   ? "chat-item-active"
                   : ""
               } d-flex align-items-center px-2 py-2 rounded-3 mb-1`}
@@ -167,12 +91,12 @@ export default function UserList({selectedUser, setSelectedUser}:UserList) {
               <div className="position-relative me-2 flex-shrink-0">
                 <img
                   src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                    user.name
+                    user?.username
                   )}&background=random&color=fff&bold=true`}
-                  alt={user.name}
+                  alt={user?.username}
                   className="rounded-circle avatar-img"
                 />
-                {user.online && (
+                {onlineUsers.includes(user._id) && (
                   <span className="position-absolute bottom-0 end-0 border border-2 border-white rounded-circle online-dot"></span>
                 )}
               </div>
@@ -180,11 +104,11 @@ export default function UserList({selectedUser, setSelectedUser}:UserList) {
               {/* Info */}
               <div className="flex-grow-1" style={{ minWidth: 0 }}>
                 <div className="d-flex justify-content-between align-items-center mb-0">
-                  <strong className="chat-name">{user.name}</strong>
-                  <small className="chat-time">{user.time}</small>
+                  <strong className="chat-name">{user?.username}</strong>
+                  {/* <small className="chat-time">{user.time}</small> */}
                 </div>
 
-                <div className="d-flex justify-content-between align-items-center gap-2">
+                {/* <div className="d-flex justify-content-between align-items-center gap-2">
                   <small className="chat-message text-truncate">
                     {user.message}
                   </small>
@@ -194,7 +118,7 @@ export default function UserList({selectedUser, setSelectedUser}:UserList) {
                       {user.unread}
                     </span>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
           ))}
