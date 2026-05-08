@@ -1,4 +1,5 @@
 import Signup from '@/components/accounts/signup'
+import AuthHeader from '@/components/auth-header';
 import React from 'react'
 
 
@@ -41,7 +42,10 @@ export const metadata = {
 
 const page = () => {
   return (
+    <>
+    <AuthHeader/>
     <Signup/>
+    </>
   )
 }
 

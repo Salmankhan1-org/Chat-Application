@@ -6,6 +6,7 @@ import BootstrapClient from "@/components/BootstrapClient";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/utils/context.provider";
+import { NextIntlClientProvider } from "next-intl";
 
 export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_DEV_DOMAIN_URL}`),
@@ -80,11 +81,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+  params
+}: {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ locale: string }>;
+}) {
+   const { locale } = await params; // ✅ FIX
+
+  const messages = (await import(`../../messages/${locale}.json`)).default;
   return (
     <html lang="en">
       <body>
@@ -97,7 +103,10 @@ export default function RootLayout({
               }}
             />
           <BootstrapClient/>
-          {children}
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        
         </AuthProvider>
       </body>
     </html>

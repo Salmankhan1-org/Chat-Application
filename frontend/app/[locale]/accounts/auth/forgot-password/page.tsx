@@ -1,4 +1,5 @@
 import ForgotPassword from '@/components/accounts/forgot-password'
+import AuthHeader from '@/components/auth-header'
 import React from 'react'
 
 export const metadata = {
@@ -25,7 +26,12 @@ export const metadata = {
 }
 
 const page = () => {
-  return <ForgotPassword/>
+  return (
+    <>
+    <AuthHeader/>
+    <ForgotPassword/>
+    </>
+  )
 }
 
 export default page

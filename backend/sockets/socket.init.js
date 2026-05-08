@@ -106,22 +106,25 @@ const initSocket = (server) => {
   io.on("connection", (socket) => {
     let currentUserId = null;
 
+    // server/socket.js
     socket.on("join_chat", ({ userId }) => {
-      if (!userId) return;
-      currentUserId = userId;
-      
-      socket.join(userId);
-      
-      // Handle multiple tabs: map userId to a set of socket IDs
-      if (!onlineUsers.has(userId)) {
-        onlineUsers.set(userId, new Set());
-      }
-      onlineUsers.get(userId).add(socket.id);
+        if (!userId) return;
+        
+        // Ensure the socket is in its own room
+        socket.join(userId);
+        
+        // Update map
+        if (!onlineUsers.has(userId)) {
+          onlineUsers.set(userId, new Set());
+        }
+        onlineUsers.get(userId).add(socket.id);
 
-      // Notify others and sync list
-      socket.broadcast.emit("user_online", { userId });
-      io.emit("online_users", Array.from(onlineUsers.keys()));
+        // CRITICAL: Force broadcast to all connected clients that the user is now online
+        // io.emit ensures everyone (including the one who just logged in) gets the latest list
+        io.emit("online_users", Array.from(onlineUsers.keys()));
     });
+
+    
 
     socket.on("send_message", (data) => {
       const { senderId, receiverId, text, id } = data;
@@ -132,6 +135,14 @@ const initSocket = (server) => {
       io.to(receiverId).emit("receive_message", data);
 
       io.to(senderId).emit('message_sent',{id})
+    });
+
+    socket.on("typing", ({ senderId, receiverId }) => {
+        socket.to(receiverId).emit("typing", { senderId });
+    });
+
+    socket.on("stop_typing", ({ senderId, receiverId }) => {
+        socket.to(receiverId).emit("stop_typing", { senderId });
     });
 
     socket.on("message_delivered", ({ messageId, senderId }) => {
@@ -154,12 +165,21 @@ const initSocket = (server) => {
         userSockets.delete(socket.id);
         if (userSockets.size === 0) {
           onlineUsers.delete(currentUserId);
-          
-          // Only emit offline if ALL tabs are closed
-          io.emit("user_offline", { userId: currentUserId });
-          io.emit("online_users", Array.from(onlineUsers.keys()));
+    
 
-          await User.findByIdAndUpdate(currentUserId, { lastSeen: new Date() });
+          // socket_init.js — in the disconnect handler
+            const updatedUser = await User.findByIdAndUpdate(
+                currentUserId,
+                { lastSeen: new Date() },
+                { returnDocument: 'after' }  // ← return the updated doc
+            );
+
+            io.emit("online_users", Array.from(onlineUsers.keys()));
+
+            io.emit("user_offline", {
+                userId: currentUserId,
+                lastSeen: updatedUser.lastSeen, // ← send it to clients
+            });
         }
       }
     });

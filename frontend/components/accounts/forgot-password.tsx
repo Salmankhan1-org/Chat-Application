@@ -10,6 +10,7 @@ import { ToastFunction } from '@/utils/toast-function'
 import axios from 'axios'
 import OTPInput from 'react-otp-input'
 import InputPassword from '../inputs/inputPassword'
+import { useTranslations } from 'next-intl'
 
 
 const InputEmail = dynamic(()=>import('@/components/inputs/inputField'));
@@ -30,6 +31,8 @@ const ForgotPassword = () => {
     const [changingPassword, setChangingPassword] = useState(false);
     const [passwordError, setPasswordError] = useState<string | undefined>('');
     const [passwordStatus, setPasswordStatus] = useState(false);
+
+    const t = useTranslations('auth.forgotPassword');
 
     const handleSendOTP = async(e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
@@ -103,7 +106,7 @@ const ForgotPassword = () => {
 
 
         if(newPassword != confirmPassword){
-            setPasswordError('New Password and Confirm does not Match');
+            setPasswordError(t('passwordMismatch'));
             return;
         }
 
@@ -173,19 +176,19 @@ const ForgotPassword = () => {
                     <Condition.When isTrue={!status && !otpStatus}>
                         <form onSubmit={handleSendOTP} method='post'>
                             <div className="text-center mb-3">
-                                <p className="mb-3 fw-medium" style={{fontSize:"35px"}}>Forgot Password</p>
-                                <p className="mb-0 small">Enter your registered email to receive password reset code.</p>
+                                <p className="mb-3 fw-medium" style={{fontSize:"35px"}}>{t('title')}</p>
+                                <p className="mb-0 small">{t('description')}</p>
                             </div>
 
                             <div className='row g-3'>
                                 <div className="col-12">
                                     <div className="d-flex float-end text-align-center mb-1">
                                         <Link href="/accounts/auth/login" className="text-decoration-none text-dark ">
-                                            <small className=" d-flex float-end align-items-center gap-1"><i className="bi bi-chevron-left small"></i> Back to Login</small>
+                                            <small className=" d-flex float-end align-items-center gap-1"><i className="bi bi-chevron-left small"></i>{t('backToLogin')}</small>
                                         </Link>
                                     </div>
                                     <div className="form-group">
-                                        <InputEmail labelText='Email' name='email' inputType='email' placeholder={`abc@example.com`} inputValue={email} setInputValue={setEmail} error={emailError} disabled={sendingCode}/>
+                                        <InputEmail labelText={t('email')} name='email' inputType='email' placeholder={`abc@example.com`} inputValue={email} setInputValue={setEmail} error={emailError} disabled={sendingCode}/>
                                     </div>
                                 </div>
                                 <div className="col-12">
@@ -195,10 +198,10 @@ const ForgotPassword = () => {
                                                 <Condition>
                                                     <Condition.When isTrue={sendingCode}>
                                                         <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                                        <span>Sending Code...</span>
+                                                        <span>{t('sendingCode')}</span>
                                                     </Condition.When>
                                                     <Condition.Else>
-                                                        <span>Send Code</span>
+                                                        <span>{t('sendCode')}</span>
                                                     </Condition.Else>
                                                 </Condition>
                                             </button>
@@ -211,14 +214,14 @@ const ForgotPassword = () => {
                     <Condition.When isTrue={status && !otpStatus}>
                         <form onSubmit={handleVerifyOTP} method='post'>
                             <div className="text-center mb-4">
-                                <h3 className="mb-2">Verify Code</h3>
-                                <p className="mb-0 small">Enter <b>OTP</b> which sent to your registered email.</p>
+                                <h3 className="mb-2">{t('verifyTitle')}</h3>
+                                <p className="mb-0 small">{t('verifyDescription')}</p>
                             </div>
                             <div className='row g-3'>
                                 <div className='col-12 '>
                                     <div className="d-flex justify-content-end mb-2">
                                         <Link href="/accounts/auth/login" className="text-decoration-none text-dark">
-                                            <small className='d-flex align-items-center gap-1'><i className="bi bi-chevron-left small ms-1"></i> Back to Log in</small>
+                                            <small className='d-flex align-items-center gap-1'><i className="bi bi-chevron-left small ms-1"></i>{t('backToLogin')}</small>
                                         </Link>
                                     </div>
                                     <div className='form-group mb-3' > 
@@ -244,7 +247,7 @@ const ForgotPassword = () => {
                                         />
 
                                         {otpError && (
-                                            <small className="text-danger">{otpError}</small>
+                                            <small className="text-danger">{t('otpError')}</small>
                                         )}
                                     </div>
                                     <div className='col-12'>
@@ -253,11 +256,11 @@ const ForgotPassword = () => {
                                                 <Condition.When isTrue={verifyingOtp}>
                                                     <div className='d-flex align-items-center'>
                                                         <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                                        <span className='fw-medium'>Verifying...</span>
+                                                        <span className='fw-medium'>{t('verifying')}</span>
                                                     </div>
                                                 </Condition.When>
                                                 <Condition.Else>
-                                                    <span className='fw-normal'>Verify</span>
+                                                    <span className='fw-normal'>{t('verify')}</span>
                                                 </Condition.Else>
                                             </Condition>
                                         </button>
@@ -269,29 +272,29 @@ const ForgotPassword = () => {
                     </Condition.When>
                     <Condition.When isTrue={status && otpStatus && passwordStatus}>
                         <div className="text-center">
-                            <h5 className="mt-3">Account password has been changed successfully!</h5>
-                            <Link href="/accounts/auth/login" className="btn login-btn w-100 btn-sm mt-3">Go to Login Page</Link>
+                            <h5 className="mt-3">{t('successMessage')}</h5>
+                            <Link href="/accounts/auth/login" className="btn login-btn w-100 btn-sm mt-3">{t('goToLogin')}</Link>
                         </div>
                     </Condition.When>
                     <Condition.When isTrue={status && otpStatus}>
                         <form onSubmit={handleChangePassword} method='post'>
                             <div className="text-center mb-3">
-                                <p className="mb-3 fw-medium" style={{fontSize:"35px"}}>Reset Password</p>
-                                <p className="mb-0 small">Enter new Password to Reset your password</p>
+                                <p className="mb-3 fw-medium" style={{fontSize:"35px"}}>{t('resetTitle')}</p>
+                                <p className="mb-0 small">{t('resetDescription')}</p>
                             </div>
 
                             <div className='row g-3'>
                                 <div className="col-12">
                                     <div className="d-flex float-end text-align-center mb-1">
                                         <Link href="/accounts/auth/login" className="text-decoration-none text-dark ">
-                                            <small className=" d-flex float-end align-items-center gap-1"><i className="bi bi-chevron-left small"></i> Back to Login</small>
+                                            <small className=" d-flex float-end align-items-center gap-1"><i className="bi bi-chevron-left small"></i>{t('backToLogin')}</small>
                                         </Link>
                                     </div>
                                     <div className='form-group'>
-                                        <InputPassword labelText='New Password' placeholder={`#########`} value={newPassword} setValue={setNewPassword} error={passwordError} disabled={changingPassword}/>
+                                        <InputPassword labelText={t('newPassword')} placeholder={`#########`} value={newPassword} setValue={setNewPassword} error={passwordError} disabled={changingPassword}/>
                                     </div>
                                     <div className='form-group'>
-                                        <InputPassword labelText='Confirm Password' placeholder={`#########`} value={confirmPassword} setValue={setConfirmPassword} error={passwordError} disabled={changingPassword}/>
+                                        <InputPassword labelText={t('confirmPassword')} placeholder={`#########`} value={confirmPassword} setValue={setConfirmPassword} error={passwordError} disabled={changingPassword}/>
                                     </div>
                                 </div>
                                 <div className="col-12">
@@ -301,10 +304,10 @@ const ForgotPassword = () => {
                                                 <Condition>
                                                     <Condition.When isTrue={changingPassword}>
                                                         <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                                        <span>Reseting...</span>
+                                                        <span>{t('resetting')}</span>
                                                     </Condition.When>
                                                     <Condition.Else>
-                                                        <span>Reset Password</span>
+                                                        <span>{t('resetPassword')}</span>
                                                     </Condition.Else>
                                                 </Condition>
                                             </button>

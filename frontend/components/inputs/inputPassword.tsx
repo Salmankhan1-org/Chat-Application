@@ -31,7 +31,7 @@ const InputPassword = ({ labelText="", value, placeholder, setValue,error,disabl
                 
             }
             <div className='input-group'>
-                <input type={type} className="form-control " placeholder={placeholder} value={value} name='password' style={{borderRight:"none",width:"40%"}} onChange={(e)=>setValue(e.target.value)}  disabled={disabled}/>
+                <input type={type} className="form-control " placeholder={placeholder} value={value} name='password' style={{borderRight:"none",width:"40%", fontSize:'12px'}} onChange={(e)=>setValue(e.target.value)}  disabled={disabled}/>
                 <span className="input-group-text input-group-sm" onClick={HandleTogglePassword} >
                     <i className={`bi bi-${icon}`}></i>
                 </span>

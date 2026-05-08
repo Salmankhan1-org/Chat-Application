@@ -1,0 +1,56 @@
+{
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot Password?",
+      "button": "Login",
+      "loading": "Login...",
+      "noAccount": "Don't have an Account?",
+      "signup": "Signup",
+      "companyTitle":"ChitChat"
+    },
+    "signup": {
+      "title": "ChitChat",
+      "username": "Username",
+      "usernamePlaceholder": "e.g, Salman khan",
+      "email": "Email",
+      "emailPlaceholder": "abc@example.com",
+      "bio": "Bio",
+      "bioPlaceholder": "Write about yourself...",
+      "password": "Password",
+      "passwordPlaceholder": "########",
+      "profileImage": "Profile Image",
+      "submit": "Signup",
+      "loading": "Signing up...",
+      "alreadyAccount": "Already have an Account?",
+      "login": "Login"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "description": "Enter your registered email to receive password reset code.",
+      "email": "Email",
+      "sendCode": "Send Code",
+      "sendingCode": "Sending Code...",
+      "backToLogin": "Back to Login",
+
+      "verifyTitle": "Verify Code",
+      "verifyDescription": "Enter OTP which was sent to your registered email.",
+      "verify": "Verify",
+      "verifying": "Verifying...",
+      "otpError": "OTP must be of 6 digits",
+
+      "resetTitle": "Reset Password",
+      "resetDescription": "Enter new password to reset your password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "resetPassword": "Reset Password",
+      "resetting": "Resetting...",
+      "passwordMismatch": "New Password and Confirm Password do not match",
+
+      "successMessage": "Account password has been changed successfully!",
+      "goToLogin": "Go to Login Page"
+    }
+  }
+}

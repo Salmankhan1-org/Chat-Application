@@ -1,6 +1,6 @@
-export const formatMessageTime = (dateString, nowParam) => {
-  const date = new Date(dateString);
-  const now = new Date(nowParam);
+export const formatMessageTime = (dateString:string, nowParam:number) => {
+  const date = new Date(dateString) as any;
+  const now = new Date(nowParam) as any;
 
   const diffSec = Math.floor((now - date) / 1000);
   const diffMin = Math.floor(diffSec / 60);

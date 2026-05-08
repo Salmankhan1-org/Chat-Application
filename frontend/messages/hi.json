@@ -1,0 +1,56 @@
+{
+  "auth": {
+    "login": {
+      "title": "गपशप",
+      "email": "ईमेल",
+      "password": "पासवर्ड",
+      "forgotPassword": "पासवर्ड भूल गए?",
+      "button": "लॉगिन",
+      "loading": "लॉगिन हो रहा है...",
+      "noAccount": "क्या आपका खाता नहीं है?",
+      "signup": "साइन अप"
+    },
+    "signup": {
+      "title": "गपशप",
+      "username": "उपयोगकर्ता नाम",
+      "usernamePlaceholder": "जैसे, सलमान खान",
+      "email": "ईमेल",
+      "emailPlaceholder": "abc@example.com",
+      "bio": "परिचय",
+      "bioPlaceholder": "अपने बारे में कुछ लिखें...",
+      "password": "पासवर्ड",
+      "passwordPlaceholder": "########",
+      "profileImage": "प्रोफाइल इमेज",
+      "submit": "साइन अप करें",
+      "loading": "साइन अप हो रहा है...",
+      "alreadyAccount": "पहले से खाता है?",
+      "login": "लॉगिन करें"
+    },
+    "forgotPassword": {
+      "title": "पासवर्ड भूल गए",
+      "description": "पासवर्ड रीसेट कोड प्राप्त करने के लिए अपना रजिस्टर्ड ईमेल दर्ज करें।",
+      "email": "ईमेल",
+      "sendCode": "कोड भेजें",
+      "sendingCode": "कोड भेजा जा रहा है...",
+      "backToLogin": "लॉगिन पर वापस जाएं",
+
+      "verifyTitle": "कोड सत्यापित करें",
+      "verifyDescription": "अपने रजिस्टर्ड ईमेल पर भेजा गया OTP दर्ज करें।",
+      "verify": "सत्यापित करें",
+      "verifying": "सत्यापित किया जा रहा है...",
+      "otpError": "OTP 6 अंकों का होना चाहिए",
+
+      "resetTitle": "पासवर्ड रीसेट करें",
+      "resetDescription": "अपना पासवर्ड रीसेट करने के लिए नया पासवर्ड दर्ज करें",
+      "newPassword": "नया पासवर्ड",
+      "confirmPassword": "पासवर्ड की पुष्टि करें",
+      "resetPassword": "पासवर्ड रीसेट करें",
+      "resetting": "रीसेट किया जा रहा है...",
+      "passwordMismatch": "नया पासवर्ड और कन्फर्म पासवर्ड मेल नहीं खाते",
+
+      "successMessage": "आपका पासवर्ड सफलतापूर्वक बदल दिया गया है!",
+      "goToLogin": "लॉगिन पेज पर जाएं"
+    }
+    
+  }
+}

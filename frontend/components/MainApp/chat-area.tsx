@@ -25,12 +25,12 @@ const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 const {onlineUsers} = useAuth();
 
   
-  // ✅ JOIN ROOM
-  useEffect(() => {
-    if (user?._id) {
-      socket.emit("join_chat", { userId: user._id });
-    }
-  }, [user]);
+//   // ✅ JOIN ROOM
+//   useEffect(() => {
+//     if (user?._id) {
+//       socket.emit("join_chat", { userId: user._id });
+//     }
+//   }, [user]);
 
  useEffect(() => {
   if (!user?._id) return;
@@ -139,7 +139,9 @@ useEffect(() => {
 
   socket.on("message_seen_ack", handleSeen);
 
-  return () => socket.off("message_seen_ack", handleSeen);
+  return () => {
+    socket.off("message_seen_ack", handleSeen);
+  }
 }, []);
 
 
@@ -158,7 +160,9 @@ useEffect(() => {
 
   socket.on("message_delivered_ack", handleDelivered);
 
-  return () => socket.off("message_delivered_ack", handleDelivered);
+  return () => {
+    socket.off("message_delivered_ack", handleDelivered);
+  }
 }, [socket]);
 
 const [now, setNow] = useState(Date.now());

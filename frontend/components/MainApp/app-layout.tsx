@@ -4,6 +4,7 @@ import SideNavigation from "./side-navigation";
 import UserList from "./user-list";
 import ChatArea from "./chat-area";
 import { useAuth } from "@/utils/context.provider";
+import { useLocale } from "next-intl";
 
 const AppLayout = () => {
   const [selectedUser, setSelectedUser] = useState(null);

@@ -11,6 +11,8 @@ import { ToastFunction } from '@/utils/toast-function';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import { useSwitchLanguage } from '@/utils/switch_language';
 
 const InputEmail = dynamic(()=>import('@/components/inputs/inputField'))
 const InputPassword = dynamic(()=>import('@/components/inputs/inputPassword'));
@@ -25,6 +27,13 @@ const Login = () => {
     const captchaRef = useRef<ReCAPTCHA | null>(null);
     const [captchaVerified, setCaptchaVerified] = useState<boolean>(false);
     const router = useRouter();
+
+    const locale = useLocale();
+
+    console.log("INside Login:",locale);
+
+    const t = useTranslations('auth.login');
+    const switchLanguage = useSwitchLanguage();
 
 
     const ValidateInputData = (email:string, password:string)=>{
@@ -94,7 +103,7 @@ const Login = () => {
                 ToastFunction('success',response.data.message);
                 ResetInputData();
                 // Navigate to home page after successful login
-                router.push('/');
+                router.push(`/${locale}`);
 
             }else{
                 ToastFunction('error',response.data.message || 'Failed to Login');
@@ -113,8 +122,7 @@ const Login = () => {
     <div className='container'>
         <div className='row gx-5'>
              <div className="col d-none d-lg-flex align-items-center justify-content-center min-vh-100">
-                <Image src={'/assets/AuthCompanyImage1.png'} alt="k12 advantages" width={600} height={400} priority quality={70} className="img-fluid" />
-                
+                <Image src={'/assets/AuthCompanyImage1.png'} alt="k12 advantages" width={600} height={400} priority quality={70} className="img-fluid" />  
             </div>
             <div className='col'>
                 <form onSubmit={handleLoginUser} className='d-flex align-items-center justify-content-center min-vh-100 px-lg-5 ms-lg-5 me-lg-4'>
@@ -123,20 +131,20 @@ const Login = () => {
                             <div className='d-flex gap-1 align-items-center'>
                                 <Image src="/assets/logo.png" alt="ChitChat Logo" width={48} height={48} priority quality={1}/>
                                 {/* <img src="/assets/logo.png" alt="ChitChat Logo" style={{width:'48px', height:'48px'}} className=''/> */}
-                                <h1 className='fs-4 fw-semibold logo-title'>ChitChat</h1>
+                                <h1 className='fs-4 fw-semibold logo-title'>{t('title')}</h1>
                             </div>
                         </div>
                         <div className='col'>
                             <div className='form-group'>
-                                <InputEmail labelText='Email' name='email' inputType='email' placeholder={`abc@example.com`} inputValue={userEmail} setInputValue={setUserEmail} error={emailError} disabled={loading}/>
+                                <InputEmail labelText={t('email')} name='email' inputType='email' placeholder={`abc@example.com`} inputValue={userEmail} setInputValue={setUserEmail} error={emailError} disabled={loading}/>
                             </div>
                         </div>
                         <div className='col'>
                             <div className='form-group'>
-                                <InputPassword labelText='Password' placeholder={`#########`} value={userPassword} setValue={setUserPassword} error={passwordError} disabled={loading}/>
+                                <InputPassword labelText={t('password')} placeholder={`#########`} value={userPassword} setValue={setUserPassword} error={passwordError} disabled={loading}/>
                             </div>
                             <p className='text-end'>
-                                <Link href={'/accounts/auth/forgot-password'} style={{fontSize:'12px'}} className='custom-link'>Forgot Password?</Link>
+                                <Link href={'/accounts/auth/forgot-password'} style={{fontSize:'12px'}} className='custom-link'>{t('forgotPassword')}</Link>
                             </p>
                         </div>
 
@@ -155,32 +163,33 @@ const Login = () => {
                                     <Condition.When isTrue={loading}>
                                         <div className='d-flex align-items-center'>
                                             <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                            <span className='fw-medium'>Login...</span>
+                                            <span className='fw-medium'>{t('loading')}</span>
                                         </div>
                                     </Condition.When>
                                     <Condition.Else>
-                                        <span className='fw-normal'>Login</span>
+                                        <span className='fw-normal'>{t('button')}</span>
                                     </Condition.Else>
                                 </Condition>
-                            </button>
-                            
+                            </button>                          
                         </div>
 
                         <div className='col text-center'>
                             <span style={{ fontSize: '13px' }}>
-                                Don't have an account?{" "}
+                                {t('noAccount')}{" "}
                                 <Link
                                     href="/accounts/auth/signup" 
                                     className="custom-link fw-semibold"
                                 >
-                                    Signup
+                                    {t('signup')}
                                 </Link>
                             </span>
                         </div>
 
                     </div>
                 </form>
+                
             </div>
+
         </div>
     </div>
   )

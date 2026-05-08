@@ -14,7 +14,7 @@ const InputField = ({ labelText, inputType, inputValue, placeholder, setInputVal
     return (
         <div className='form-group'>
             <label className="mb-0 fw-medium form-label" style={{ fontSize: "13px" }}>{labelText}</label>
-            <input type={inputType} className="form-control " name="email" value={inputValue} placeholder={placeholder} disabled={disabled}
+            <input type={inputType} style={{fontSize:'12px'}} className="form-control" name="email" value={inputValue} placeholder={placeholder} disabled={disabled}
                 onChange={(e) => setInputValue(e.target.value)} />
             <Condition>
                 <Condition.When isTrue={error ? true : false}>

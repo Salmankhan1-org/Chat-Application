@@ -58,7 +58,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const fetchFriends = async()=>{
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/users/friends`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/users/friends`,{
+            withCredentials: true
+        });
 
         if(response.data.success){
             setFriends(response.data.data);
@@ -81,6 +83,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             );
 
             if(response.data.success){
+                if (user?._id) {
+                  socket.emit("user_offline", { userId: user._id });
+                }
                 socket.disconnect(); // ✅ IMPORTANT
                 setUser(null);
                 setOnlineUsers([]);
@@ -93,88 +98,52 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
   useEffect(() => {
-    fetchUser();
-    fetchFriends();
-  }, []);
+  fetchUser().then(() => fetchFriends()); // sequential, not parallel
+}, []);
 
-//  useEffect(() => {
-//   if (!user?._id) return;
-
-//   socket.emit("join_chat", { userId: user._id });
-
-//   const handleOnlineUsers = (users: string[]) => {
-//     setOnlineUsers(users.filter((id) => id !== user._id));
-//   };
-
-//   const handleUserOnline = ({ userId }: { userId: string }) => {
-//     if (userId !== user._id) {
-//       setOnlineUsers((prev) => [...new Set([...prev, userId])]);
-//     }
-//   };
-
-//   const handleUserOffline = ({ userId }: { userId: string }) => {
-//     setOnlineUsers((prev) => prev.filter((id) => id !== userId));
-//   };
-
-//   socket.on("online_users", handleOnlineUsers);
-//   socket.on("user_online", handleUserOnline);
-//   socket.on("user_offline", handleUserOffline);
-
-//   return () => {
-//     socket.off("online_users", handleOnlineUsers);
-//     socket.off("user_online", handleUserOnline);
-//     socket.off("user_offline", handleUserOffline);
-//   };
-// }, [user?._id]);
 
 useEffect(() => {
-    // 1. If no user, disconnect socket and clear
-    if (!user?._id) {
-      if (socket.connected) socket.disconnect();
-      return;
+  if (!user?._id) return;
+
+  const onConnect = () => {
+    socket.emit("join_chat", { userId: user._id });
+  };
+
+  const handleOnlineUsers = (users: string[]) => {
+    setOnlineUsers(users.filter((id) => id !== user._id));
+  };
+
+  const handleUserOnline = ({ userId }: { userId: string }) => {
+    if (userId !== user._id) {
+      setOnlineUsers((prev) => [...new Set([...prev, userId])]);
     }
+  };
 
-    // 2. If user exists, connect
-    if (!socket.connected) {
-      socket.connect();
-    }
+  const handleUserOffline = ({ userId, lastSeen }: { userId: string; lastSeen: string }) => {
+    setOnlineUsers((prev) => prev.filter((id) => id !== userId));
+    setFriends((prev: any) =>
+      prev.map((f: any) => (f._id === userId ? { ...f, lastSeen } : f))
+    );
+  };
 
-    // 3. Define listeners
-    const onConnect = () => {
-      socket.emit("join_chat", { userId: user._id });
-    };
+  socket.on("connect", onConnect);
+  socket.on("online_users", handleOnlineUsers);
+  socket.on("user_online", handleUserOnline);
+  socket.on("user_offline", handleUserOffline);
 
-    const handleOnlineUsers = (users: string[]) => {
-      setOnlineUsers(users.filter(id => id !== user._id));
-    };
+  if (!socket.connected) {
+    socket.connect();
+  } else {
+    onConnect();
+  }
 
-    const handleUserOnline = ({ userId }: { userId: string }) => {
-      if (userId !== user._id) {
-        setOnlineUsers(prev => [...new Set([...prev, userId])]);
-      }
-    };
-
-    const handleUserOffline = ({ userId }: { userId: string }) => {
-      setOnlineUsers(prev => prev.filter(id => id !== userId));
-    };
-
-    // 4. Register listeners
-    socket.on("connect", onConnect);
-    socket.on("online_users", handleOnlineUsers);
-    socket.on("user_online", handleUserOnline);
-    socket.on("user_offline", handleUserOffline);
-
-    // If already connected (e.g. state update), join immediately
-    if (socket.connected) onConnect();
-
-    // 5. Cleanup
-    return () => {
-      socket.off("connect", onConnect);
-      socket.off("online_users", handleOnlineUsers);
-      socket.off("user_online", handleUserOnline);
-      socket.off("user_offline", handleUserOffline);
-    };
-  }, [user?._id]); // Fires immediately on login/refresh
+  return () => {
+    socket.off("connect", onConnect);
+    socket.off("online_users", handleOnlineUsers);
+    socket.off("user_online", handleUserOnline);
+    socket.off("user_offline", handleUserOffline);
+  };
+}, [user?._id]); // Fires immediately on login/refresh
   return (
     <AuthContext.Provider value={{ user, loading, error, refreshUser, logout , friends, onlineUsers}}>
       {children}

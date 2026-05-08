@@ -1,3 +1,4 @@
+import AuthHeader from '@/components/auth-header';
 import dynamic from 'next/dynamic'
 import React from 'react'
 
@@ -58,7 +59,10 @@ export const metadata = {
 
 const page = () => {
   return (
+    <>
+    <AuthHeader/>
     <Login/>
+    </>
   )
 }
 

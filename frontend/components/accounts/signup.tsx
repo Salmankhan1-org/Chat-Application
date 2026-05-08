@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { ToggleBootstrapModal } from '@/utils/toggleBootstrapModal';
 // @ts-ignore
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { useTranslations } from 'next-intl';
 
 // import VerifyOTPModal from '@/components/accounts/VerifyOTPModal';
 
@@ -31,6 +32,7 @@ const Signup = () => {
 
     const [loading , setLoading] = useState(false);
     const router = useRouter();
+    const t = useTranslations('auth.signup');
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -145,27 +147,28 @@ const Signup = () => {
                             <div className='d-flex gap-1 align-items-center'>
                                 <Image src="/assets/logo.png" alt="ChitChat Logo" width={48} height={48} priority quality={1}/>
                                 {/* <img src="/assets/logo.png" alt="ChitChat Logo" style={{width:'48px', height:'48px'}} className=''/> */}
-                                <h1 className='fs-4 fw-semibold logo-title'>ChitChat</h1>
+                                <h1 className='fs-4 fw-semibold logo-title'>{t('title')}</h1>
                             </div>
                         </div>
                         <div className='col'>
                             <div className='form-group'>
-                                <InputField labelText='Username' name='Username' inputType='text' placeholder={`e.g, Salman khan`} inputValue={username} setInputValue={setUserName} error={emailError} disabled={loading}/>
+                                <InputField labelText={t('username')} name='Username' inputType='text' placeholder={t('usernamePlaceholder')} inputValue={username} setInputValue={setUserName} error={emailError} disabled={loading}/>
                             </div>
                         </div>
                         <div className='col'>
                             <div className='form-group'>
-                                <InputField labelText='Email' name='email' inputType='email' placeholder={`abc@example.com`} inputValue={userEmail} setInputValue={setUserEmail} error={emailError} disabled={loading}/>
+                                <InputField labelText={t('email')} name='email' inputType='email' placeholder={`abc@example.com`} inputValue={userEmail} setInputValue={setUserEmail} error={emailError} disabled={loading}/>
                             </div>
                         </div>
                         {/* Bio (Textarea) */}
                         <div className='col'>
                             <div className='form-group'>
-                                <label className='form-label mb-0 fw-medium' style={{fontSize:'13px'}}>Bio</label>
+                                <label className='form-label mb-0 fw-medium' style={{fontSize:'13px'}}>{t('bio')}</label>
                                 <textarea
                                     className='form-control'
                                     rows={3}
-                                    placeholder='Tell something about yourself...'
+                                    style={{fontSize:'12px'}}
+                                    placeholder={t('bioPlaceholder')}
                                     value={bio}
                                     onChange={(e) => setBio(e.target.value)}
                                     disabled={loading}
@@ -175,14 +178,14 @@ const Signup = () => {
 
                         <div className='col'>
                             <div className='form-group'>
-                                <InputPassword labelText='Password' placeholder={`########`} value={userPassword} setValue={setUserPassword} error={passwordError} disabled={loading}/>
+                                <InputPassword labelText={t('password')} placeholder={`########`} value={userPassword} setValue={setUserPassword} error={passwordError} disabled={loading}/>
                             </div>
                         </div>
 
                         {/* Profile Image Upload */}
                         <div className='col'>
                             <div className='form-group'>
-                                <label className='form-label mb-0 fw-medium' style={{fontSize:'13px'}}>Profile Image</label>
+                                <label className='form-label mb-0 fw-medium' style={{fontSize:'13px'}}>{t('profileImage')}</label>
                                 <input
                                     type="file"
                                     accept="image/*"
@@ -198,10 +201,10 @@ const Signup = () => {
                                 <Condition>
                                     <Condition.When isTrue={loading}>
                                         <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                        <span className='fw-normal'>Signing Up...</span>
+                                        <span className='fw-normal'>{t('loading')}</span>
                                     </Condition.When>
                                     <Condition.Else>
-                                        <span className='fw-normal'>Sign Up</span>
+                                        <span className='fw-normal'>{t('submit')}</span>
                                     </Condition.Else>
                                 </Condition>
                             </button>
@@ -210,12 +213,12 @@ const Signup = () => {
 
                         <div className='col text-center'>
                             <span style={{ fontSize: '13px' }}>
-                                Already have an account?{" "}
+                               {t('alreadyAccount')}{" "}
                                 <Link
                                     href="/accounts/auth/login" 
                                     className="text-decoration-none fw-semibold"
                                 >
-                                    Login
+                                    {t('login')}
                                 </Link>
                             </span>
                         </div>
